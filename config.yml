@@ -1,0 +1,8 @@
+---
+logging:
+  level: INFO
+  loggers:
+    com.chinexboroja: DEBUG
+
+template: Hello, %s!
+defaultName: Stranger
