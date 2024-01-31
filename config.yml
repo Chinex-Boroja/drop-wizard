@@ -6,3 +6,6 @@ logging:
 
 template: Hello, %s!
 defaultName: Stranger
+songWriters:
+  - John Lennon
+  - Jeff Lynne
