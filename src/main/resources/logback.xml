@@ -19,6 +19,7 @@
                 <loggerName />
                 <logLevel />
                 <message />
+                <mdc />
             </providers>
         </encoder>
     </appender>
