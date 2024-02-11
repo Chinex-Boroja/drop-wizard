@@ -27,6 +27,7 @@ public class App {
         // Clear all items
         MDC.clear();
 
+
         // System.setProperty("LOG_LEVEL", "warn");
 //        logger.trace("Entering method foo()");
 //        logger.debug("Received request from 198.12.34.56");
