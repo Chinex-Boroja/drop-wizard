@@ -4,13 +4,16 @@ import com.chinexboroja.core.model.SongWriter;
 import com.chinexboroja.db.employeerepo.EmployeeRepository;
 import com.chinexboroja.db.repository.SongWriterRepository;
 import com.chinexboroja.health.TemplateHealthCheck;
+import com.chinexboroja.health.employeemanagement.ApplicationHealthCheck;
 import com.chinexboroja.resources.HelloWorldResource;
 import com.chinexboroja.resources.Message;
 import com.chinexboroja.resources.SongWriters;
 import com.chinexboroja.resources.employeemanagement.EmployeeController;
+import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
+import jakarta.ws.rs.client.Client;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -54,10 +57,16 @@ public class MyExampleAppApplication extends Application<MyExampleAppConfigurati
         SongWriters songWriters = new SongWriters(songWriterRepository);
         environment.jersey().register(songWriters);
 
+        LOGGER.info("Registering Jersey Client");
+        final Client client = new JerseyClientBuilder(environment)
+            .using(configuration.getJerseyClientConfiguration())
+                .build(getName());
+
         LOGGER.info("Registering REST resources....");
         environment.jersey().register(new EmployeeController(environment.getValidator(), new EmployeeRepository()));
 
-
+        LOGGER.info("Registering Application Health Check");
+        environment.healthChecks().register("application", new ApplicationHealthCheck(client));
 
     }
 
