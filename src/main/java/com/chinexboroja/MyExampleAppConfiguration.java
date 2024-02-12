@@ -1,8 +1,10 @@
 package com.chinexboroja;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import io.dropwizard.client.HttpClientConfiguration;
 import io.dropwizard.core.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
@@ -41,4 +43,8 @@ public class MyExampleAppConfiguration extends Configuration {
     public List<String> getSongWriters() {
         return this.songWriters;
     }
+
+    @Valid
+    @NotNull
+    private HttpClientConfiguration httpClient = new HttpClientConfiguration
 }
