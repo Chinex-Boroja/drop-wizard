@@ -1,5 +1,6 @@
 package com.chinexboroja.health.employeemanagement;
 
+import com.chinexboroja.constants.URIConstants;
 import com.chinexboroja.core.model.employee.Employee;
 import com.codahale.metrics.health.HealthCheck;
 import jakarta.ws.rs.client.Client;
@@ -20,7 +21,7 @@ public class ApplicationHealthCheck extends HealthCheck {
     @Override
     protected Result check() throws Exception {
 
-        WebTarget webTarget = client.target("http//localhost:8080/employees");
+        WebTarget webTarget = client.target(URIConstants.EMPLOYEES_BASE_URI);
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
 
         Response response = invocationBuilder.get();
