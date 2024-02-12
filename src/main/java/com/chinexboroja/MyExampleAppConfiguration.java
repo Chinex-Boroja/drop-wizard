@@ -2,6 +2,7 @@ package com.chinexboroja;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.dropwizard.client.HttpClientConfiguration;
+import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.core.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -46,5 +47,29 @@ public class MyExampleAppConfiguration extends Configuration {
 
     @Valid
     @NotNull
-    private HttpClientConfiguration httpClient = new HttpClientConfiguration
+    private HttpClientConfiguration httpClient = new HttpClientConfiguration();
+
+    @JsonProperty("httpClient")
+    public HttpClientConfiguration getHttpClientConfiguration() {
+        return httpClient;
+    }
+
+    @JsonProperty("httpClient")
+    public void setHttpClientConfiguration(HttpClientConfiguration httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    @Valid
+    @NotNull
+    private JerseyClientConfiguration jerseyClient = new JerseyClientConfiguration();
+
+    @JsonProperty("jerseyClient")
+    public JerseyClientConfiguration getJerseyClientConfiguration() {
+        return jerseyClient;
+    }
+
+    @JsonProperty("jerseyClient")
+    public void setJerseyClientConfiguration(JerseyClientConfiguration jerseyClient) {
+        this.jerseyClient = jerseyClient;
+    }
 }
