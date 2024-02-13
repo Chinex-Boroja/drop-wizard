@@ -60,8 +60,6 @@ public class EmployeeController {
 
         // validation
         Set<ConstraintViolation<Employee>> violations = validator.validate(employee);
-        Employee checkEmployee = repository.getEmployee(employee.getId());
-
         if (!violations.isEmpty()) {
             ArrayList<String> validationMessages = new ArrayList<>();
             for (ConstraintViolation<Employee> violation : violations) {
@@ -70,6 +68,8 @@ public class EmployeeController {
             return Response.status(Response.Status.BAD_REQUEST).entity(validationMessages).build();
 
         }
+
+        Employee checkEmployee = repository.getEmployee(employee.getId());
         if (checkEmployee != null) {
             repository.updateEmployee(employee.getId(), employee);
             return Response.created(new URI(URIConstants.EMPLOYEE_URI + employee.getId())).build();

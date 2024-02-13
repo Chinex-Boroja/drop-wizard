@@ -9,6 +9,12 @@ import com.chinexboroja.resources.HelloWorldResource;
 import com.chinexboroja.resources.Message;
 import com.chinexboroja.resources.SongWriters;
 import com.chinexboroja.resources.employeemanagement.EmployeeController;
+import com.chinexboroja.security.AppAuthenticator;
+import com.chinexboroja.security.AppAuthorizer;
+import com.chinexboroja.security.UserPrincipal;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
@@ -16,6 +22,7 @@ import io.dropwizard.core.setup.Environment;
 import jakarta.ws.rs.client.Client;
 import java.util.ArrayList;
 import java.util.List;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +75,15 @@ public class MyExampleAppApplication extends Application<MyExampleAppConfigurati
         LOGGER.info("Registering Application Health Check");
         environment.healthChecks().register("application", new ApplicationHealthCheck(client));
 
-    }
 
+        //**** Dropwizard security ****//
+        environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<UserPrincipal>()
+            .setAuthenticator(new AppAuthenticator())
+            .setAuthorizer(new AppAuthorizer())
+            .setRealm("BASIC-AUTH-REALM")
+            .buildAuthFilter()));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(UserPrincipal.class));
+
+    }
 }

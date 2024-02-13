@@ -27,6 +27,10 @@ public class EmployeeRepository {
         map.put(id, employee);
     }
 
+    public static void createEmployee(Integer id, Employee employee) {
+        map.put(id, employee);
+    }
+
     public static void removeEmployee(Integer id) {
         map.remove(id);
     }
